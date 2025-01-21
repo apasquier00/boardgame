@@ -1,4 +1,3 @@
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,11 +6,34 @@ public class ArtificialPlayer extends Player {
     enum Difficulty {EASY, MEDIUM, HARD};
     public Difficulty difficulty;
     TestVictoire testVictoire;
+    InteractionUtilisateur interactionUtilisateur;
     // RAJOUTER LE EXTEND PLAYER
-    ArtificialPlayer(Symbol symbolP, TestVictoire testVictoire, Difficulty dif) {
+    ArtificialPlayer(Symbol symbolP, TestVictoire testVictoire, Difficulty dif, InteractionUtilisateur interactionUtilisateur) {
         super(symbolP);
         this.difficulty = dif;
         this.testVictoire = testVictoire;
+        this.interactionUtilisateur = interactionUtilisateur;
+
+        setDifficulty();
+
+    }
+
+
+
+    public void setDifficulty() {
+        int botDifficulty;
+
+        this.difficulty = difficulty;
+        do {
+            botDifficulty = interactionUtilisateur.getBotsDifficulty(symbol);
+
+            switch (botDifficulty){
+                case 0: break;
+                case 1: difficulty= ArtificialPlayer.Difficulty.MEDIUM; break;
+                case 2: difficulty= ArtificialPlayer.Difficulty.HARD; break;
+            }
+        }
+        while (0 > botDifficulty || botDifficulty > 3 );
 
     }
 
@@ -31,6 +53,7 @@ public class ArtificialPlayer extends Player {
 
         return c;
     }
+
 
 
     List<Integer> autoPlay(Cell[][] board) {

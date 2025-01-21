@@ -5,7 +5,7 @@ import java.util.List;
 abstract class Player {
 
 
-    enum Symbol {
+    public enum Symbol {
         O,
         X
     }

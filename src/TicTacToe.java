@@ -99,25 +99,19 @@ class TicTacToe {
 
             botNumber = interactionUtilisateur.getBotsNumber();
                 //initialisation des joueurs
-            botDifficulty = interactionUtilisateur.getBotsDifficulty();
-        }while ((0 > botNumber || botNumber > 3)&& 0>botDifficulty || botDifficulty >3 );
-        switch (botDifficulty){
-            case 0: break;
-            case 1: difficulty= ArtificialPlayer.Difficulty.MEDIUM; break;
-            case 2: difficulty= ArtificialPlayer.Difficulty.HARD; break;
-        }
+        }while ((0 > botNumber || botNumber > 3));
         switch (botNumber) {
             case 0:
                 this.players[0] = new HumanPlayer(Player.Symbol.X, interactionUtilisateur);
                 this.players[1] = new HumanPlayer(Player.Symbol.O, interactionUtilisateur);
                 break;
             case 1:
-                this.players[0] = new ArtificialPlayer(Player.Symbol.X, testVictoire, difficulty);
+                this.players[0] = new ArtificialPlayer(Player.Symbol.X, testVictoire, difficulty, interactionUtilisateur);
                 this.players[1] = new HumanPlayer(Player.Symbol.O, interactionUtilisateur);
                 break;
             case 2:
-                this.players[0] = new ArtificialPlayer(Player.Symbol.X, testVictoire, difficulty);
-                this.players[1] = new ArtificialPlayer(Player.Symbol.O, testVictoire, difficulty);
+                this.players[0] = new ArtificialPlayer(Player.Symbol.X, testVictoire, difficulty, interactionUtilisateur);
+                this.players[1] = new ArtificialPlayer(Player.Symbol.O, testVictoire, difficulty, interactionUtilisateur);
                 break;
                 //fermer le programme si le joueur selectionne 3
             case 3:

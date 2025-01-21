@@ -29,16 +29,17 @@ public class InteractionUtilisateur
 
     }
 
-    public int getBotsDifficulty() {
+    public int getBotsDifficulty(Player.Symbol symbol) {
         do{
             try{
-                view.printMsg("Merci de choisir votre difficultée : 0 = EASY; 1 = MEDIUM; 2 = HARD");
+                view.printMsg("Merci de choisir votre difficultée pour Artificial player " + symbol + " : 0 = EASY; 1 = MEDIUM; 2 = HARD");
 
                 Scanner scanner = new Scanner(System.in);
                 botsNumber = scanner.nextInt();
                 return botsNumber;
 
             }catch (Exception e){
+
                 view.printExeption(e);
             }
 
