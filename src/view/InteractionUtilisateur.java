@@ -1,3 +1,8 @@
+package view;
+
+import model.BoardGame;
+import model.Player;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -5,34 +10,17 @@ public class InteractionUtilisateur
 {
     View view;
     int botsNumber;
-    InteractionUtilisateur(View view){
+    public InteractionUtilisateur(View view){
         this.botsNumber = 0;
         this.view = view;
     }
 
 
 
-    public int getBotsNumber() {
+    public int getNumber(String s) {
         do{
             try{
-                view.askBotsNumber();
-
-                Scanner scanner = new Scanner(System.in);
-                botsNumber = scanner.nextInt();
-                return botsNumber;
-
-            }catch (Exception e){
-                view.printExeption(e);
-            }
-
-        }while (true);
-
-    }
-
-    public int getBotsDifficulty(Player.Symbol symbol) {
-        do{
-            try{
-                view.printMsg("Merci de choisir votre difficultée pour Artificial player " + symbol + " : 0 = EASY; 1 = MEDIUM; 2 = HARD");
+                view.printMsg(s);
 
                 Scanner scanner = new Scanner(System.in);
                 botsNumber = scanner.nextInt();
@@ -48,14 +36,19 @@ public class InteractionUtilisateur
     }
 
 
-    public List<Integer> getCoordinates() {
+    public List<Integer> getCoordinates(BoardGame.GameName gamename) {
         List<Integer> coordinates = new ArrayList<>();
 
         do {
             try{
-                view.printMsg("Veuillez entrer la ligne ou vous souhaitez jouer");
                 Scanner s = new Scanner(System.in);
-                coordinates.add(s.nextInt());
+                if (gamename == BoardGame.GameName.connect4){
+                    coordinates.add(0);
+                }else {
+                    view.printMsg("Veuillez entrer la ligne ou vous souhaitez jouer");
+                    s = new Scanner(System.in);
+                    coordinates.add(s.nextInt());
+                }
                 view.printMsg("Veuillez entrer la colonne ou vous souhaitez jouer");
                 s = new Scanner(System.in);
                 coordinates.add(s.nextInt());

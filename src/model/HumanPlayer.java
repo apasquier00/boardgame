@@ -1,18 +1,22 @@
+package model;
+
+import view.InteractionUtilisateur;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class HumanPlayer extends Player {
     InteractionUtilisateur interactionUtilisateur;
-
-    HumanPlayer(Symbol symbolP, InteractionUtilisateur interactionUtilisateur) {
+    BoardGame.GameName gamename;
+    HumanPlayer(Player.Symbol symbolP, InteractionUtilisateur interactionUtilisateur, BoardGame.GameName gamename) {
         super(symbolP);
         this.interactionUtilisateur = interactionUtilisateur;
-
+        this.gamename = gamename;
     }
 
     @Override
     List<Integer> play(Cell[][] board){
         List<Integer> c = new ArrayList<>();
-        c = interactionUtilisateur.getCoordinates();
+        c = interactionUtilisateur.getCoordinates(gamename);
         return c;    }
 }
