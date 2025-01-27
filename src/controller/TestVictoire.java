@@ -18,7 +18,7 @@ public class TestVictoire {
     public TestVictoire() {
     }
 
-    public boolean isOverEnhanced(Cell[][] board, int victoryNumber, Player.Symbol symbol, BoardGame.GameName gameName, String playerName) {
+    public boolean isOver(Cell[][] board, int victoryNumber, Player.Symbol symbol, BoardGame.GameName gameName, String playerName) {
         Cell.cellstate testCellState = Cell.cellstate.EMPTY;
         if (symbol == Player.Symbol.X){
             testCellState = Cell.cellstate.X;

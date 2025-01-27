@@ -9,11 +9,12 @@ public class Main {
         Gomoku gomoku = new Gomoku();
         ConnectFour connectFour = new ConnectFour();
         do {
-            int i = ticTacToe.interactionUtilisateur.getNumber("A quel jeu voulez vous jouer ?\n" +
-                    "0 : Tic Tac Toe\n" +
-                    "1 : Gomoku\n" +
-                    "2 : Connect Four\n" +
-                    "3 : Quitter");
+            int i = ticTacToe.interactionUtilisateur.getNumber("""
+                    A quel jeu voulez vous jouer ?
+                    0 : Tic Tac Toe
+                    1 : Gomoku
+                    2 : Connect Four
+                    3 : Quitter""");
             switch (i){
                 case 0: ticTacToe.play(); break;
                 case 1: gomoku.play(); break;

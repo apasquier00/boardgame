@@ -26,7 +26,7 @@ public abstract class Player {
             };
             case BoardGame.GameName.gomoku -> switch (symbol) {
                 case X -> "blanc";
-                case O -> "jaune";
+                case O -> "noir";
             };
             case BoardGame.GameName.connect4 -> switch (symbol) {
                 case X -> "jaune";

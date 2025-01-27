@@ -47,10 +47,10 @@ abstract public class BoardGame {
             do {
                 for (Player p : players) {
                     //affichage de la grille
-                    view.gridDisplay(Board);
+                    view.gridDisplay(Board, gameName);
 
                     // Tour du Joueur
-                    view.printMsg("Joueur : " + p.getRepresentation(gameName) + " c'est à vous" );
+                    view.printMsg("Joueur " + p.getRepresentation(gameName) + " : c'est à vous" );
                     //reinitialisation des coordonées
                     coordinates.clear();
                     coordinates.add(-1);
@@ -64,13 +64,13 @@ abstract public class BoardGame {
                         }
                     }
                     if (gameName.equals(GameName.connect4)){
-                        view.printMsg("  Joueur : "+p.getRepresentation(gameName) + " à décider de jouer en " + coordinates.get(1) );
+                        view.printMsg("  Joueur "+p.getRepresentation(gameName) + " : à décider de jouer en " + coordinates.get(1) );
                     } else {
-                        view.printMsg("  Joueur : "+p.getRepresentation(gameName) + " à décider de jouer en " +coordinates.get(0) + " ; " + coordinates.get(1) );
+                        view.printMsg("  Joueur "+p.getRepresentation(gameName) + " : à décider de jouer en " +coordinates.get(0) + " ; " + coordinates.get(1) );
                     }
 
                     setOwner(coordinates.get(0), coordinates.get(1), p);
-                    gameOver = testVictoire.isOverEnhanced(Board, victorySize, p.symbol, gameName, p.getRepresentation(gameName));
+                    gameOver = testVictoire.isOver(Board, victorySize, p.symbol, gameName, p.getRepresentation(gameName));
                     if (gameOver) {
                         break;
                     }
@@ -78,12 +78,16 @@ abstract public class BoardGame {
 
             } while (!gameOver);
 
-            view.gridDisplay(Board);
+            view.gridDisplay(Board, gameName);
 
+            int exit = 0;
             view.endMsg(testVictoire.getVictoryMessage());
-            int exit = interactionUtilisateur.getNumber("Voulez vous refaire une partie de " + gameName + " ?\n" +
-                    "0 : OUI\n" +
-                    "1 : NON");
+            do{
+                exit = interactionUtilisateur.getNumber("Voulez vous refaire une partie de " + gameName + " ?\n" +
+                        "0 : OUI\n" +
+                        "1 : NON");
+            } while (exit < 0 || exit > 1);
+
             if (exit == 1){
                 break;
             }
@@ -162,8 +166,6 @@ abstract public class BoardGame {
         for (int i = 0; i < Board.length; i++)
             for (int j = 0; j < Board[0].length; j++) {
                 Board[i][j] = new Cell(gameName);
-                Board[i][j].state = Cell.cellstate.EMPTY;
-
             }
     }
 }

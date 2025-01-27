@@ -32,7 +32,7 @@ BoardGame.GameName gameName;
             case BoardGame.GameName.tictactoe:
                 switch(state) {
                 case EMPTY:
-                    return "| ▪\uFE0F ";
+                    return "|        ";
                 case X:
                     return "| ❌ ";
                 case O:
@@ -41,16 +41,16 @@ BoardGame.GameName gameName;
             case BoardGame.GameName.gomoku:
                 switch(state) {
                     case EMPTY:
-                        return "| ▪\uFE0F ";
+                        return "|        ";
                     case X:
                         return "| ⚪\uFE0F ";
                     case O:
-                        return "| \uD83C\uDF15 ";
+                        return "| ⚫ ";
                 } break;
             case BoardGame.GameName.connect4:
                 switch(state) {
                     case EMPTY:
-                        return "| ▪\uFE0F ";
+                        return "|        ";
                     case X:
                         return "| \uD83C\uDF15 ";
                     case O:

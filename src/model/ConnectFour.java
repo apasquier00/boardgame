@@ -4,7 +4,6 @@ public class ConnectFour extends BoardGame{
 
 
     public ConnectFour() {
-        // MODIFIER LA SIZE POUR QU'ELLE CONTIENNE 2 VALEURES
         size = 6;
         victorySize = 4;
         this.gameName = GameName.connect4;

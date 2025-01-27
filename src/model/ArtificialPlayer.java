@@ -20,8 +20,9 @@ public class ArtificialPlayer extends Player {
         this.testVictoire = testVictoire;
         this.interactionUtilisateur = interactionUtilisateur;
         this.victorySize = victorySize;
-        setDifficulty();
         this.gameName = gameName;
+
+        setDifficulty();
     }
 
 
@@ -31,7 +32,7 @@ public class ArtificialPlayer extends Player {
 
         this.difficulty = difficulty;
         do {
-            botDifficulty = interactionUtilisateur.getNumber("Merci de choisir votre difficultée pour Artificial player " + symbol + " : 0 = EASY; 1 = MEDIUM; 2 = HARD");
+            botDifficulty = interactionUtilisateur.getNumber("Merci de choisir votre difficultée pour Artificial player " + getRepresentation(gameName) + " : 0 = EASY; 1 = MEDIUM; 2 = HARD");
 
             switch (botDifficulty){
                 case 0: break;
@@ -39,7 +40,7 @@ public class ArtificialPlayer extends Player {
                 case 2: difficulty= ArtificialPlayer.Difficulty.HARD; break;
             }
         }
-        while (0 > botDifficulty || botDifficulty > 3 );
+        while (0 > botDifficulty || botDifficulty > 2 );
 
     }
 
@@ -151,6 +152,26 @@ public class ArtificialPlayer extends Player {
                 }
             }
 
+            //ia avancée PAS ENCORE OPERATIONELLE
+            
+            /*
+            if (!isBoardEmpty(board)){
+                List<Integer> randomAdjacent = new ArrayList<>();
+                int i = 0;
+                int j = 0;
+                do {
+                    do {
+                        i = (int) (Math.random() * board.length-1);
+                        j = (int) (Math.random() * board[0].length-1);
+                    }while (board[i][j].state == Cell.cellstate.EMPTY);
+                    randomAdjacent = returnRandomAdjacentCell(i, j);
+
+                } while ((randomAdjacent.get(0)) < 0 || (randomAdjacent.get(1) < 0) || (randomAdjacent.get(0) > board.length) || (randomAdjacent.get(1) > board[0].length));
+                return randomAdjacent;
+            }
+
+             */
+
 
 
         //verification de la victoire par l'adversaire
@@ -197,12 +218,57 @@ boolean isWinningCell(Cell[][] board1, int i, int j, boolean forEnemy, Player.Sy
                     break;
             }
         }
-        winning = testVictoire.isOverEnhanced(board1, victorySize, symbolForTest, gameName, this.getRepresentation(gameName));
+        winning = testVictoire.isOver(board1, victorySize, symbolForTest, gameName, this.getRepresentation(gameName));
 
     board1[i][j].setState(Cell.cellstate.EMPTY);
 
     return winning;
 }
+
+
+    List<Integer> returnRandomAdjacentCell(int i, int j){
+        List<Integer> adjacentCells = new ArrayList<>();
+        int randomCell = (int) (Math.random() * 7);
+        switch (randomCell){
+            case 0:
+                adjacentCells.add(i-1);adjacentCells.add(j-1); return adjacentCells;
+            case 1:
+                adjacentCells.add(i-1);adjacentCells.add(j); return adjacentCells;
+            case 2:
+                adjacentCells.add(i-1);adjacentCells.add(j+1); return adjacentCells;
+            case 3:
+                adjacentCells.add(i);adjacentCells.add(j-1); return adjacentCells;
+            case 4:
+                adjacentCells.add(i);adjacentCells.add(j+1); return adjacentCells;
+            case 5:
+                adjacentCells.add(i+1);adjacentCells.add(j-1); return adjacentCells;
+            case 6:
+                adjacentCells.add(i+1);adjacentCells.add(j); return adjacentCells;
+            case 7:
+                adjacentCells.add(i+1);adjacentCells.add(j+1); return adjacentCells;
+
+
+        }
+    return adjacentCells;
+    }
+
+    boolean isBoardEmpty(Cell[][] board){
+        for (Cell[] cells : board) {
+            for (int j = 0; j < board.length; j++) {
+                if (cells[j].state != Cell.cellstate.EMPTY) {
+                    return false;
+                }
+            }
+        }
+        return true;
+
+    }
+
+
+
 }
+
+
+
 
 
