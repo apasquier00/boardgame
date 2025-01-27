@@ -11,25 +11,8 @@ public class TicTacToe extends BoardGame {
 
     //constructor
     public TicTacToe() {
-        size = 3;
-        this.gameName = GameName.tictactoe;
-        victorySize = size;
+        super(3,3,GameName.TICTACTOE);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

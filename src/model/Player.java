@@ -6,29 +6,28 @@ import java.util.List;
 public abstract class Player {
 
 
-    public enum Symbol {
-        O,
-        X
-    }
 
     boolean isBot;
-    public Symbol symbol;
+    Cell.cellstate symbol;
 
-    Player(Symbol symbolP) {
-        this.symbol = symbolP;
+    Player(Cell.cellstate symbol) {
+        this.symbol = symbol;
     }
 
     public String getRepresentation(BoardGame.GameName gameName) {
         return switch (gameName) {
-            case BoardGame.GameName.tictactoe -> switch (symbol) {
+            case BoardGame.GameName.TICTACTOE -> switch (symbol) {
+                case EMPTY -> null;
                 case X -> "X";
                 case O -> "O";
             };
-            case BoardGame.GameName.gomoku -> switch (symbol) {
+            case BoardGame.GameName.GOMOKU -> switch (symbol) {
+                case EMPTY -> null;
                 case X -> "blanc";
                 case O -> "noir";
             };
-            case BoardGame.GameName.connect4 -> switch (symbol) {
+            case BoardGame.GameName.CONNECT4 -> switch (symbol) {
+                case EMPTY -> null;
                 case X -> "jaune";
                 case O -> "rouge";
             };
@@ -38,15 +37,8 @@ public abstract class Player {
     abstract List<Integer> play(Cell[][] board);
 
     public Cell.cellstate getSymbol() {
-        //retourne le symbol du joueur sous forme de Cell.cellstate
-        switch (symbol) {
-            case O:
-                return Cell.cellstate.O;
-            case X:
-                return Cell.cellstate.X;
-            default:
-                return Cell.cellstate.EMPTY;
-        }
+        //retourne le symbol du joueur
+    return symbol;
     }
 
 

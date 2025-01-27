@@ -5,17 +5,17 @@ import model.Cell;
 import model.Player;
 
 public class View {
-    public static String Board_background = "\u001B[47m";
-    public static final String console_background = "\u001B[40m";
+    private static String Board_background = "\u001B[47m";
+    private static final String console_background = "\u001B[40m";
 
     public View(){
     }
 //affichage du tableau
     public void gridDisplay(Cell[][] board, BoardGame.GameName gameName) {
         switch (gameName){
-            case tictactoe: Board_background = "\u001B[100m";break;
-            case connect4: Board_background = "\u001B[44m";break;
-            case gomoku : Board_background = "\u001B[101m";break;
+            case TICTACTOE: Board_background = "\u001B[100m";break;
+            case CONNECT4: Board_background = "\u001B[44m";break;
+            case GOMOKU: Board_background = "\u001B[101m";break;
         }
 
         //la longueure de la ligne en fonction de size

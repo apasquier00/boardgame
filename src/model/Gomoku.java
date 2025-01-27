@@ -4,9 +4,7 @@ public class Gomoku extends BoardGame{
 
 
     public Gomoku() {
-        size = 15;
-        this.gameName = GameName.gomoku;
-        victorySize = 5;
+        super(15, 5, GameName.GOMOKU);
     }
 
 

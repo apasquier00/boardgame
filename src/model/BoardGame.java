@@ -10,22 +10,26 @@ import java.util.List;
 abstract public class BoardGame {
     Cell[][] Board;
     public enum GameName{
-        connect4, tictactoe, gomoku
+        CONNECT4, TICTACTOE, GOMOKU
     }
-    public GameName gameName;
-    Player[] players;
+    private GameName gameName;
+    private Player[] players;
+
     public InteractionUtilisateur interactionUtilisateur;
     TestVictoire testVictoire;
     View view;
-    boolean gameOver;
+    private boolean gameOver;
 
-    public BoardGame() {
+    public BoardGame(int size, int victorySize, GameName gameName) {
 
         this.players = new Player[2];
         this.view = new View();
         this.testVictoire = new TestVictoire();
         this.interactionUtilisateur = new InteractionUtilisateur(view);
         this.gameOver = false;
+        this.gameName = gameName;
+        this.size = size;
+        this.victorySize = victorySize;
     }
 
     int victorySize;
@@ -63,7 +67,7 @@ abstract public class BoardGame {
                             view.printMsg(coordinates.toString());
                         }
                     }
-                    if (gameName.equals(GameName.connect4)){
+                    if (gameName.equals(GameName.CONNECT4)){
                         view.printMsg("  Joueur "+p.getRepresentation(gameName) + " : à décider de jouer en " + coordinates.get(1) );
                     } else {
                         view.printMsg("  Joueur "+p.getRepresentation(gameName) + " : à décider de jouer en " +coordinates.get(0) + " ; " + coordinates.get(1) );
@@ -119,16 +123,16 @@ abstract public class BoardGame {
         }while ((0 > botNumber || botNumber > 2));
         switch (botNumber) {
             case 0:
-                this.players[0] = new HumanPlayer(Player.Symbol.X, interactionUtilisateur, gameName);
-                this.players[1] = new HumanPlayer(Player.Symbol.O, interactionUtilisateur, gameName);
+                this.players[0] = new HumanPlayer(Cell.cellstate.X, interactionUtilisateur, gameName);
+                this.players[1] = new HumanPlayer(Cell.cellstate.O, interactionUtilisateur, gameName);
                 break;
             case 1:
-                this.players[0] = new ArtificialPlayer(Player.Symbol.X, testVictoire, difficulty, interactionUtilisateur, victorySize, gameName);
-                this.players[1] = new HumanPlayer(Player.Symbol.O, interactionUtilisateur, gameName);
+                this.players[0] = new ArtificialPlayer(Cell.cellstate.X, testVictoire, difficulty, interactionUtilisateur, victorySize, gameName);
+                this.players[1] = new HumanPlayer(Cell.cellstate.O, interactionUtilisateur, gameName);
                 break;
             case 2:
-                this.players[0] = new ArtificialPlayer(Player.Symbol.X, testVictoire, difficulty, interactionUtilisateur, victorySize, gameName);
-                this.players[1] = new ArtificialPlayer(Player.Symbol.O, testVictoire, difficulty, interactionUtilisateur, victorySize, gameName);
+                this.players[0] = new ArtificialPlayer(Cell.cellstate.X, testVictoire, difficulty, interactionUtilisateur, victorySize, gameName);
+                this.players[1] = new ArtificialPlayer(Cell.cellstate.O, testVictoire, difficulty, interactionUtilisateur, victorySize, gameName);
                 break;
         }
 
@@ -140,7 +144,7 @@ abstract public class BoardGame {
         //test de la ligne
         if (coordinate.get(0) < 0 || coordinate.get(0) > Board.length){ return false;};
         //test de la colonne
-        if(gameName.equals(GameName.connect4)){
+        if(gameName.equals(GameName.CONNECT4)){
             if (coordinate.get(1) < 0 || coordinate.get(1) > Board[0].length-1){ return false;};
         }else {
             if (coordinate.get(1) < 0 || coordinate.get(1) > Board[0].length){ return false;};
@@ -157,8 +161,12 @@ abstract public class BoardGame {
         Board[ligne][colonne].setState(player.getSymbol());
     }
 
+    Cell.cellstate getOwner(int ligne, int colonne) {
+        return Board[ligne][colonne].getState();
+    }
+
     void createClearBoard(){
-        if (gameName != GameName.connect4){
+        if (gameName != GameName.CONNECT4){
             Board = new Cell[size][size];
         }else {
             Board = new Cell[size][size + 1];

@@ -18,22 +18,18 @@ public class TestVictoire {
     public TestVictoire() {
     }
 
-    public boolean isOver(Cell[][] board, int victoryNumber, Player.Symbol symbol, BoardGame.GameName gameName, String playerName) {
+    public boolean isOver(Cell[][] board, int victoryNumber, Cell.cellstate symbol, BoardGame.GameName gameName, String playerName) {
         Cell.cellstate testCellState = Cell.cellstate.EMPTY;
-        if (symbol == Player.Symbol.X){
-            testCellState = Cell.cellstate.X;
-        } else if (symbol == Player.Symbol.O){
-            testCellState = Cell.cellstate.O;
-            }
+
 
 
         //test de victoire par collonne ou ligne
-        if (countLines(board, victoryNumber, testCellState, playerName)){
+        if (countLines(board, victoryNumber, symbol, playerName)){
             return true;
-        }else if (countCols(board, victoryNumber, testCellState, playerName)){
+        }else if (countCols(board, victoryNumber, symbol, playerName)){
             return true;
         }
-        else if (countDiags(board, victoryNumber, testCellState, playerName)){
+        else if (countDiags(board, victoryNumber, symbol, playerName)){
             return true;
         }else if (countEmptyCells(board)){
             return true;
@@ -46,7 +42,7 @@ public class TestVictoire {
         int count = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j].state == testCellState){
+                if (board[i][j].getState() == testCellState){
                     count++;
                     if (count == victoryNumber) {
                         victoryMessage = "Victoire du joueur " + playerName + " avec une ligne";
@@ -67,7 +63,7 @@ public class TestVictoire {
 
         for (int j = 0; j < board[0].length; j++) {
             for (int i = 0; i < board.length; i++) {
-                if (board[i][j].state == testCellState){
+                if (board[i][j].getState() == testCellState){
                     count++;
                     if (count == victoryNumber) {
                         victoryMessage = "Victoire du joueur " + playerName + " avec une colonne";
@@ -91,7 +87,7 @@ public class TestVictoire {
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[0].length; j++) {
                         if (i+j == k){
-                            if (board[i][j].state == testCellState){
+                            if (board[i][j].getState() == testCellState){
                                 count++;
                                 if (count == victoryNumber) {
                                     victoryMessage = "Victoire du joueur " + playerName + " avec une diagonnale";
@@ -113,7 +109,7 @@ public class TestVictoire {
             for (int i = 0; i < board.length; i++) {
                 for (int j = 0; j < board[0].length; j++) {
                     if (i-j == k){
-                        if (board[i][j].state == testCellState){
+                        if (board[i][j].getState() == testCellState){
                             count++;
                             if (count == victoryNumber) {
                                 victoryMessage = "Victoire du joueur " + playerName + " avec une diagonnale";
@@ -140,7 +136,7 @@ public class TestVictoire {
         int count = 0;
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[0].length; j++) {
-                if (board[i][j].state == Cell.cellstate.EMPTY){
+                if (board[i][j].getState() == Cell.cellstate.EMPTY){
                     count++;
                 }
             }
