@@ -1,13 +1,13 @@
 package model;
 
 public class Cell {
-    private String representation;
     public enum cellstate {
         EMPTY,
         X,
         O
     }
 
+    private String representation;
 
     private cellstate state;
 

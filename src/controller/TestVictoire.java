@@ -8,7 +8,7 @@ public class TestVictoire {
 
 
 
-    public String victoryMessage;
+    private String victoryMessage;
 
     public String getVictoryMessage() {
         return victoryMessage;

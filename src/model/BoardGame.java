@@ -8,20 +8,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 abstract public class BoardGame {
-    Cell[][] Board;
+    public Cell[][] getBoard() {
+        return Board;
+    }
+
+    private Cell[][] Board;
     public enum GameName{
         CONNECT4, TICTACTOE, GOMOKU
     }
     private GameName gameName;
     private Player[] players;
 
-    public InteractionUtilisateur interactionUtilisateur;
-    TestVictoire testVictoire;
-    View view;
+    private InteractionUtilisateur interactionUtilisateur;
+    private TestVictoire testVictoire;
+    private View view;
     private boolean gameOver;
-
+    private TicTacToe ticTacToe = new TicTacToe();
+    private Gomoku gomoku = new Gomoku();
+    private ConnectFour connectFour = new ConnectFour();
     public BoardGame(int size, int victorySize, GameName gameName) {
-
+        this.ticTacToe = new TicTacToe();
+        this.gomoku = new Gomoku();
+        this.connectFour = new ConnectFour();
         this.players = new Player[2];
         this.view = new View();
         this.testVictoire = new TestVictoire();
@@ -54,27 +62,26 @@ abstract public class BoardGame {
                     view.gridDisplay(Board, gameName);
 
                     // Tour du Joueur
-                    view.printMsg("Joueur " + p.getRepresentation(gameName) + " : c'est à vous" );
+                    view.printMsg("Joueur " + p.getName(gameName) + " : c'est à vous" );
                     //reinitialisation des coordonées
                     coordinates.clear();
-                    coordinates.add(-1);
-                    coordinates.add(-1);
                     //test des coordonées
-                    while (!testCoordinates(coordinates)){
+                    do
+                    {
                         coordinates = p.play(Board);
                         if (!testCoordinates(coordinates)) {
                             view.unvalidCoordinate();
                             view.printMsg(coordinates.toString());
                         }
-                    }
+                    }while (!testCoordinates(coordinates));
                     if (gameName.equals(GameName.CONNECT4)){
-                        view.printMsg("  Joueur "+p.getRepresentation(gameName) + " : à décider de jouer en " + coordinates.get(1) );
+                        view.printMsg("  Joueur "+p.getName(gameName) + " : à décider de jouer en " + coordinates.get(1) );
                     } else {
-                        view.printMsg("  Joueur "+p.getRepresentation(gameName) + " : à décider de jouer en " +coordinates.get(0) + " ; " + coordinates.get(1) );
+                        view.printMsg("  Joueur "+p.getName(gameName) + " : à décider de jouer en " +coordinates.get(0) + " ; " + coordinates.get(1) );
                     }
 
                     setOwner(coordinates.get(0), coordinates.get(1), p);
-                    gameOver = testVictoire.isOver(Board, victorySize, p.symbol, gameName, p.getRepresentation(gameName));
+                    gameOver = testVictoire.isOver(Board, victorySize, p.getSymbol(), gameName, p.getName(gameName));
                     if (gameOver) {
                         break;
                     }

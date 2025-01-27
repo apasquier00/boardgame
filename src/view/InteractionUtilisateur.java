@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 public class InteractionUtilisateur
 {
-    View view;
+    private View view;
     private int botsNumber;
     public InteractionUtilisateur(View view){
         this.botsNumber = 0;

@@ -7,14 +7,14 @@ public abstract class Player {
 
 
 
-    boolean isBot;
-    Cell.cellstate symbol;
+    private boolean isBot;
+    private Cell.cellstate symbol;
 
     Player(Cell.cellstate symbol) {
         this.symbol = symbol;
     }
 
-    public String getRepresentation(BoardGame.GameName gameName) {
+    public String getName(BoardGame.GameName gameName) {
         return switch (gameName) {
             case BoardGame.GameName.TICTACTOE -> switch (symbol) {
                 case EMPTY -> null;
