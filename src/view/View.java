@@ -1,22 +1,14 @@
 package view;
 
-import model.BoardGame;
-import model.Cell;
-import model.Player;
 
 public class View {
-    private static String Board_background = "\u001B[47m";
     private static final String console_background = "\u001B[40m";
 
     public View(){
     }
 //affichage du tableau
-    public void gridDisplay(Cell[][] board, BoardGame.GameName gameName) {
-        switch (gameName){
-            case TICTACTOE: Board_background = "\u001B[100m";break;
-            case CONNECT4: Board_background = "\u001B[44m";break;
-            case GOMOKU: Board_background = "\u001B[101m";break;
-        }
+    public void gridDisplay(String[][] board, String Board_background) {
+
 
         //la longueure de la ligne en fonction de size
         StringBuilder line = new StringBuilder();
@@ -59,7 +51,7 @@ public class View {
                 System.out.print(i + "  ");
             }
             for (int j = 0; j < board[0].length; j++) {
-                System.out.print(Board_background + board[i][j].getRepresentation());
+                System.out.print(Board_background + board[i][j]);
             }
             //fin de ligne
             System.out.print("|" + console_background);
@@ -69,14 +61,8 @@ public class View {
 
 
 
-
-    public void playerTurn(Player p){
-        System.out.println("Joueur : " + p.getSymbol() + " c'est à vous");
-
-    }
-
-    public void unvalidCoordinate(){
-        System.out.println("Coordonnées non valides");
+    public void unvalidCoordinate(String coordinate){
+        System.out.println("Coordonnées non valides : " + coordinate);
 
     }
 
@@ -92,7 +78,7 @@ public class View {
     public void printMsg(String msg){
         System.out.println(msg);
     }
-    void printExeption(Exception error){
+    public void printExeption(Exception error){
         System.out.println("ERROR : " + error);
     }
 

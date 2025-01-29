@@ -1,4 +1,7 @@
-package model;
+package model.Players;
+
+import model.Games.BoardGame;
+import model.Board.Cell;
 
 import java.util.List;
 
@@ -8,33 +11,34 @@ public abstract class Player {
 
 
     private boolean isBot;
-    private Cell.cellstate symbol;
+    private final Cell.cellstate symbol;
 
     Player(Cell.cellstate symbol) {
         this.symbol = symbol;
     }
 
-    public String getName(BoardGame.GameName gameName) {
+    public String getName(String gameName) {
         return switch (gameName) {
-            case BoardGame.GameName.TICTACTOE -> switch (symbol) {
+            case "TICTACTOE" -> switch (symbol) {
                 case EMPTY -> null;
                 case X -> "X";
                 case O -> "O";
             };
-            case BoardGame.GameName.GOMOKU -> switch (symbol) {
+            case "GOMOKU" -> switch (symbol) {
                 case EMPTY -> null;
                 case X -> "blanc";
                 case O -> "noir";
             };
-            case BoardGame.GameName.CONNECT4 -> switch (symbol) {
+            case "CONNECT4" -> switch (symbol) {
                 case EMPTY -> null;
                 case X -> "jaune";
                 case O -> "rouge";
             };
+            default -> throw new IllegalStateException("Unexpected value: " + gameName);
         };
     }
 
-    abstract List<Integer> play(Cell[][] board);
+    public abstract List<Integer> play(Cell[][] board, boolean isConnect4);
 
     public Cell.cellstate getSymbol() {
         //retourne le symbol du joueur

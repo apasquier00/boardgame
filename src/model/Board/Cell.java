@@ -1,4 +1,6 @@
-package model;
+package model.Board;
+
+
 
 public class Cell {
     public enum cellstate {
@@ -11,17 +13,15 @@ public class Cell {
 
     private cellstate state;
 
-BoardGame.GameName gameName;
 
-    Cell(BoardGame.GameName gameName){
-        this.gameName = gameName;
+    public Cell(){
         this.representation =  "|     ";
         this.state = cellstate.EMPTY;
     }
 
-    public String setRepresentation() {
+    public String setRepresentation(String gameName) {
         switch (gameName){
-            case BoardGame.GameName.TICTACTOE:
+            case "TICTACTOE":
                 switch(state) {
                     case EMPTY:
                         return "|        ";
@@ -30,7 +30,7 @@ BoardGame.GameName gameName;
                     case O:
                         return "| ⭕ ";
                 } break;
-            case BoardGame.GameName.GOMOKU:
+            case "GOMOKU":
                 switch(state) {
                     case EMPTY:
                         return "|        ";
@@ -39,7 +39,7 @@ BoardGame.GameName gameName;
                     case O:
                         return "| ⚫ ";
                 } break;
-            case BoardGame.GameName.CONNECT4:
+            case "CONNECT4":
                 switch(state) {
                     case EMPTY:
                         return "|        ";
@@ -60,8 +60,8 @@ BoardGame.GameName gameName;
         this.state = state;
     }
 
-    public String getRepresentation(){
-        representation = setRepresentation();
+    public String getRepresentation(String gameName){
+        representation = setRepresentation(gameName);
         return representation;
         }
 

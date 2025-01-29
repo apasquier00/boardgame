@@ -1,7 +1,8 @@
-package model;
+package model.Players;
 
-import controller.TestVictoire;
-import view.InteractionUtilisateur;
+import controller.InteractionUtilisateur;
+import model.Board.Cell;
+import model.Tests.TestVictoire;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,20 +11,18 @@ public class ArtificialPlayer extends Player {
     public enum Difficulty {EASY, MEDIUM, HARD, EXTREME};
 
     private Difficulty difficulty;
-    private TestVictoire testVictoire;
-    private InteractionUtilisateur interactionUtilisateur;
-    private int victorySize;
-    private BoardGame.GameName gameName;
+    private final TestVictoire testVictoire;
+    private final InteractionUtilisateur interactionUtilisateur;
+    private final int victorySize;
+    private String gameName;
 
-
-    ArtificialPlayer(Cell.cellstate symbolP, TestVictoire testVictoire, Difficulty dif, InteractionUtilisateur interactionUtilisateur, int victorySize, BoardGame.GameName gameName) {
+    public ArtificialPlayer(Cell.cellstate symbolP, TestVictoire testVictoire, Difficulty dif, InteractionUtilisateur interactionUtilisateur, int victorySize, String gameName) {
         super(symbolP);
         this.difficulty = dif;
         this.testVictoire = testVictoire;
         this.interactionUtilisateur = interactionUtilisateur;
         this.victorySize = victorySize;
         this.gameName = gameName;
-
         setDifficulty();
     }
 
@@ -46,7 +45,7 @@ public class ArtificialPlayer extends Player {
     }
 
     @Override
-    List<Integer> play(Cell[][] board) {
+    public List<Integer> play(Cell[][] board, boolean isConnect4) {
         switch (difficulty){
             case EASY: return autoPlay(board);
             case MEDIUM, HARD:
@@ -95,7 +94,7 @@ public class ArtificialPlayer extends Player {
         List<Integer> coordinates = new ArrayList<Integer>();
         //le robot joue au milieu si le tableau est pair
         //seulement avec le bot difficile et le tictactoe
-        if ((difficulty == Difficulty.HARD && gameName== BoardGame.GameName.TICTACTOE)) {
+        if ((difficulty == Difficulty.HARD && gameName== "TICTACTOE")) {
             if ((board.length % 2) != 0 && board[(board.length) / 2][(board.length) / 2].getState() == Cell.cellstate.EMPTY) {
                 coordinates.add((board.length) / 2);
                 coordinates.add((board.length) / 2);
@@ -103,7 +102,7 @@ public class ArtificialPlayer extends Player {
             }
         }
             for (int i = 0; i < board[0].length; i++) {
-                if (gameName != BoardGame.GameName.CONNECT4) {
+                if (gameName != "CONNECT4") {
                     for (int j = 0; j < board[i].length; j++) {
 
                         //verification si la victoire est possible
@@ -175,26 +174,26 @@ boolean isWinningCell(Cell[][] board1, int i, int j, boolean forEnemy, int victo
             //verification de la victoire pour le joueur
         } else if (!forEnemy){
             switch (getSymbol()){
-                case O: board1[i][j].setState(Cell.cellstate.O);break;
-                case X: board1[i][j].setState(Cell.cellstate.X);break;
+                case Cell.cellstate.O: board1[i][j].setState(Cell.cellstate.O);break;
+                case Cell.cellstate.X: board1[i][j].setState(Cell.cellstate.X);break;
 
             }
         }else{
             //verification de la victoire pour le joueur adverse
 
             symboltotest = switch (getSymbol()) {
-                case X -> {
+                case Cell.cellstate.X -> {
                     board1[i][j].setState(Cell.cellstate.O);
                     yield Cell.cellstate.O;
                 }
-                case O -> {
+                case Cell.cellstate.O -> {
                     board1[i][j].setState(Cell.cellstate.X);
                     yield Cell.cellstate.X;
                 }
                 default -> symboltotest;
             };
         }
-        winning = testVictoire.isOver(board1, victorySize, symboltotest, gameName, this.getName(gameName));
+        winning = testVictoire.isOver(board1, victorySize, symboltotest);
 
     board1[i][j].setState(Cell.cellstate.EMPTY);
 

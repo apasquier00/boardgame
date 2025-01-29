@@ -1,7 +1,6 @@
-package view;
+package controller;
 
-import model.BoardGame;
-import model.Player;
+import view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,9 +9,9 @@ public class InteractionUtilisateur
 {
     private View view;
     private int botsNumber;
-    public InteractionUtilisateur(View view){
+    public InteractionUtilisateur(){
         this.botsNumber = 0;
-        this.view = view;
+        this.view = new View();
     }
 
 
@@ -36,13 +35,30 @@ public class InteractionUtilisateur
     }
 
 
-    public List<Integer> getCoordinates(BoardGame.GameName gamename) {
+    public void unvalidCoordinate(String s){
+        view.unvalidCoordinate(s);
+    }
+
+    public void printMsg(String s){
+        view.printMsg(s);
+    }
+
+//    public void endMsg(String s){
+//        view.endMsg(s);
+//    }
+
+
+    public void gridDisplay(String[][] Board, String boardBackground){
+        view.gridDisplay(Board, boardBackground);
+    }
+
+    public List<Integer> getCoordinates(boolean isConnect4) {
         List<Integer> coordinates = new ArrayList<>();
 
         do {
             try{
                 Scanner s = new Scanner(System.in);
-                if (gamename == BoardGame.GameName.CONNECT4){
+                if (isConnect4){
                     coordinates.add(0);
                 }else {
                     view.printMsg("Veuillez entrer la ligne ou vous souhaitez jouer");
