@@ -14,7 +14,7 @@ public class InteractionUtilisateur
 
 
 
-    public int getNumber(String s) {
+    public int getNumber(String s) throws Exception {
         VIEW.printMsg(s);
         Scanner scanner = new Scanner(System.in);
         botsNumber = scanner.nextInt();
@@ -50,10 +50,6 @@ public class InteractionUtilisateur
     public void printMsg(String s){
         VIEW.printMsg(s);
     }
-
-//    public void endMsg(String s){
-//        view.endMsg(s);
-//    }
 
 
     public void gridDisplay(String[][] Board, String boardBackground){

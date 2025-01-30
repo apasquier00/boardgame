@@ -4,14 +4,14 @@ import java.util.List;
 
 public class InvalidCoordinatesException extends Exception {
 
-    private List<Integer> coordinates;
+    private final List<Integer> COORDINATES;
 
     public List<Integer> getCoordinates() {
-        return coordinates;
+        return COORDINATES;
     }
 
     public InvalidCoordinatesException(String message, List<Integer> coordinates) {
         super(message);
-        this.coordinates = coordinates;
+        this.COORDINATES = coordinates;
     }
 }

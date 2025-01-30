@@ -56,22 +56,14 @@ abstract public class BoardGame {
     }
 
 
-    public void getMove(List<Integer> coordinates) throws InvalidCoordinatesException {
+    public void Play(){
         turn++;
-            do {
-                if (testCoordinates(coordinates)) {
-                    throw new InvalidCoordinatesException("Unvalid coordinates", coordinates);
-                }
-            } while (testCoordinates(coordinates));
+        List<Integer> Coordinates = new ArrayList<>();
 
-        setOwner(coordinates.get(0), coordinates.get(1), currentPlayer);
-        testEnd();
-    }
-    public void botPlay(){
-        turn++;
-        List<Integer> badCoordinates = new ArrayList<>();
-        badCoordinates = currentPlayer.choosePlayCoordinates(board, testGameNameConnect4(), badCoordinates);
-        setOwner(badCoordinates.get(0), badCoordinates.get(1), currentPlayer);
+        do {
+            Coordinates = currentPlayer.choosePlayCoordinates(board, testGameNameConnect4(), Coordinates);
+        } while (testCoordinates(Coordinates));
+        setOwner(Coordinates.get(0), Coordinates.get(1), currentPlayer);
         testEnd();
     }
 

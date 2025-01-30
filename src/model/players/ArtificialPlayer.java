@@ -227,7 +227,7 @@ boolean isWinningCell(Cell[][] board1, int i, int j, boolean forEnemy, int victo
     boolean isBoardEmpty(Cell[][] board){
         for (Cell[] cells : board) {
             for (int j = 0; j < board.length; j++) {
-                if (cells[j].getState() != Cell.cellstate.EMPTY) {
+                if (cells[j].getState() == this.getSymbol()) {
                     return false;
                 }
             }
@@ -289,11 +289,14 @@ boolean isWinningCell(Cell[][] board1, int i, int j, boolean forEnemy, int victo
 
                 int i = 0;
                 int j = 0;
+                int k = 0;
                 do {
                     do {
                         i = (int) (Math.random() * board.length-1);
                         j = (int) (Math.random() * board[0].length-1);
-                    }while (board[i][j].getState() == Cell.cellstate.EMPTY);
+                        k ++;
+                        if (k == 100){ k =0; break;}
+                    }while (this.getSymbol() != board[i][j].getState());
 
                     randomAdjacent = returnRandomAdjacentCell(i, j);
                     System.out.print(randomAdjacent);

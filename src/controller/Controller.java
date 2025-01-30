@@ -19,7 +19,7 @@ public class Controller {
 
     public void start(){
         {
-            int i = 0;
+            int i;
             do {
                 do {
                     try{
@@ -72,11 +72,22 @@ public class Controller {
 
         //créer le tableau
         game.createClearBoard();
-        try{
-            createPlayers(askBotNumber()); //créer les joueurs
-        } catch (Exception e) {
-            view.printExeption(e);
-        }
+        do {
+            try {
+                int i = askBotNumber();
+                if ((i == 0 || i == 1 || i == 2)) {
+                    createPlayers(i); //créer les joueurs
+                    break;
+                } else {
+                    throw new Exception("choix invalide");
+                }
+            } catch (Exception e) {
+                view.printExeption(e);
+            }
+
+        } while (true);
+
+
 
 
     }
@@ -87,11 +98,9 @@ public class Controller {
             interactionUtilisateur.printMsg("Joueur " + game.getCurrentPlayerName() + " : c'est à vous" );
 
             //playCoordinates = game.getCurrentPlayer().choosePlayCoordinates();
-            if (game.isCurrentPlayerBot()){
-                game.botPlay();
-            }else {
-                askCoordinates();
-            }
+
+            askCoordinates();
+
             interactionUtilisateur.printMsg("Joueur "+ game.getCurrentPlayerName() + " : à décider de jouer en " + game.getOwner() );
     }
 
@@ -116,7 +125,7 @@ public class Controller {
 
 
     // Demande le nombre de bot
-    private int askBotNumber(){
+    private int askBotNumber() throws Exception{
 
         return interactionUtilisateur.getNumber( view.getArtificialPlayerChoice());
     }
@@ -142,12 +151,10 @@ public class Controller {
     private void askCoordinates(){
         do {
             try {
-                game.getMove(interactionUtilisateur.getCoordinates(game.testGameNameConnect4()));
+                game.Play();
                 break;
-            } catch (InvalidCoordinatesException e) {
-                interactionUtilisateur.callUnvalidCoordinate(e.getCoordinates().toString());
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                view.printExeption(e);
             }
         }while (true);
     }
