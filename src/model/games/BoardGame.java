@@ -1,6 +1,5 @@
 package model.games;
 
-import view.InteractionUtilisateur;
 import model.board.Cell;
 import model.players.ArtificialPlayer;
 import model.players.HumanPlayer;
@@ -23,15 +22,15 @@ abstract public class BoardGame {
         CONNECT4, TICTACTOE, GOMOKU
     }
 
-    private GameName gameName;
-    private Player[] players;
-    private TestVictoire testVictoire;
+    protected GameName gameName;
+    private final Player[] PLAYER;
+    private final TestVictoire TESTVICTOIRE;
     private boolean gameOver;
 
 
     public BoardGame(int size, int victorySize, GameName gameName) {
-        this.players = new Player[2];
-        this.testVictoire = new TestVictoire();
+        this.PLAYER = new Player[2];
+        this.TESTVICTOIRE = new TestVictoire();
         this.gameOver = false;
         this.gameName = gameName;
         this.size = size;
@@ -57,7 +56,7 @@ abstract public class BoardGame {
     }
 
 
-    public void play(List<Integer> coordinates) throws InvalidCoordinatesException {
+    public void getMove(List<Integer> coordinates) throws InvalidCoordinatesException {
         turn++;
             do {
                 if (testCoordinates(coordinates)) {
@@ -68,19 +67,17 @@ abstract public class BoardGame {
         setOwner(coordinates.get(0), coordinates.get(1), currentPlayer);
         testEnd();
     }
-    public List<Integer> botPlay(){
+    public void botPlay(){
         turn++;
-
         List<Integer> badCoordinates = new ArrayList<>();
-        badCoordinates = currentPlayer.play(board, testGameNameConnect4(), badCoordinates);
+        badCoordinates = currentPlayer.choosePlayCoordinates(board, testGameNameConnect4(), badCoordinates);
         setOwner(badCoordinates.get(0), badCoordinates.get(1), currentPlayer);
         testEnd();
-        return badCoordinates;
     }
 
 
     public void testEnd() {
-        setGameOver(testVictoire.isOver(board, victorySize, currentPlayer.getSymbol()));
+        setGameOver(TESTVICTOIRE.isOver(board, victorySize, currentPlayer.getSymbol()));
 
         if (gameOver) {
             setEndMsg("\nVictoire du joueur " + currentPlayer.getName(gameName.toString()) + "\n");
@@ -91,22 +88,27 @@ abstract public class BoardGame {
     }
 
 
-    public void createPlayer(int botNumber) {
-        ArtificialPlayer.Difficulty difficulty = ArtificialPlayer.Difficulty.EASY;
+    public void createPlayer(boolean isBot, int difficulty, String symbol) throws Exception {
 
-        switch (botNumber) {
-            case 0:
-                this.players[0] = new HumanPlayer(Cell.cellstate.X);
-                this.players[1] = new HumanPlayer(Cell.cellstate.O);
+        if (isBot){
+            switch (symbol){
+                case "X":
+                    this.PLAYER[0] = new ArtificialPlayer(Cell.cellstate.X, TESTVICTOIRE, victorySize, getGameName(), difficulty);
+                    break;
+                case "O":
+                    this.PLAYER[1] = new ArtificialPlayer(Cell.cellstate.O, TESTVICTOIRE, victorySize, getGameName(), difficulty);
+                    break;
+            }
+        }else {
+            switch (symbol){
+                case "X":
+                    this.PLAYER[0] = new HumanPlayer(Cell.cellstate.X);
                 break;
-            case 1:
-                this.players[0] = new ArtificialPlayer(Cell.cellstate.X, testVictoire, difficulty, victorySize, getGameName());
-                this.players[1] = new HumanPlayer(Cell.cellstate.O);
-                break;
-            case 2:
-                this.players[0] = new ArtificialPlayer(Cell.cellstate.X, testVictoire, difficulty, victorySize, getGameName());
-                this.players[1] = new ArtificialPlayer(Cell.cellstate.O, testVictoire, difficulty, victorySize, getGameName());
-                break;
+                case "O":
+                    this.PLAYER[1] = new HumanPlayer(Cell.cellstate.O);
+                    break;
+
+            }
         }
 
     }
@@ -118,10 +120,7 @@ abstract public class BoardGame {
             return true;        //test de la colonne
         }else if (coordinate.get(1) < 0 || coordinate.get(1) >= board[0].length) {
             return true;
-        }else if (board[coordinate.get(0)][coordinate.get(1)].getState() != Cell.cellstate.EMPTY) {
-             return true;
-         }
-        return false;
+        }else return board[coordinate.get(0)][coordinate.get(1)].getState() != Cell.cellstate.EMPTY;
     }
 
     protected void setOwner(int ligne, int colonne, Player player) {
@@ -160,12 +159,11 @@ abstract public class BoardGame {
     }
 
     public String getBoardBackground() {
-        String boardBackground = switch (gameName) {
+        return switch (gameName) {
             case TICTACTOE -> "\u001B[100m";
             case CONNECT4 -> "\u001B[44m";
             case GOMOKU -> "\u001B[101m";
         };
-        return boardBackground;
     }
 
     public boolean testGameNameConnect4() {
@@ -176,6 +174,7 @@ abstract public class BoardGame {
         return currentPlayer.getName(getGameName());
     }
 
+
     public String getOwner() {
         return coordinates;
     }
@@ -185,16 +184,16 @@ abstract public class BoardGame {
             int random = (int) (Math.random() * 2);
             switch (random) {
                 case 0:
-                    setCurrentPlayer(this.players[0]);
+                    setCurrentPlayer(this.PLAYER[0]);
                     break;
                 case 1:
-                    setCurrentPlayer(this.players[1]);
+                    setCurrentPlayer(this.PLAYER[1]);
                     break;
             }
-        } else if (getCurrentPlayer() == this.players[0]) {
-            setCurrentPlayer(this.players[1]);
-        } else if (getCurrentPlayer() == this.players[1]) {
-            setCurrentPlayer(this.players[0]);
+        } else if (getCurrentPlayer() == this.PLAYER[0]) {
+            setCurrentPlayer(this.PLAYER[1]);
+        } else if (getCurrentPlayer() == this.PLAYER[1]) {
+            setCurrentPlayer(this.PLAYER[0]);
         }
 
     }
@@ -221,4 +220,7 @@ abstract public class BoardGame {
         return currentPlayer.isBot();
     }
 
+    public int getCurrentPlayerDifficulty(){
+        return currentPlayer.getDifficultyInt();
+    }
 }

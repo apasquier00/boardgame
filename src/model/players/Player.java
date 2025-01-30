@@ -8,6 +8,7 @@ import java.util.List;
 public abstract class Player {
 
 
+    protected int difficultyInt;
 
 
     protected boolean isBot;
@@ -37,7 +38,7 @@ public abstract class Player {
         };
     }
 
-    public abstract List<Integer> play(Cell[][] board, boolean isConnect4, List<Integer> coordinates);
+    public abstract List<Integer> choosePlayCoordinates(Cell[][] board, boolean isConnect4, List<Integer> coordinates);
 
     public Cell.cellstate getSymbol() {
         //retourne le symbol du joueur
@@ -47,5 +48,7 @@ public abstract class Player {
     public boolean isBot() {
         return isBot;
     }
-
+    public int getDifficultyInt() {
+        return difficultyInt;
+    }
     }

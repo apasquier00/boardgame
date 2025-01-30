@@ -1,11 +1,11 @@
 package model.players;
 
-import view.InteractionUtilisateur;
 import model.board.Cell;
 import model.tests.TestVictoire;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ArtificialPlayer extends Player {
     public enum Difficulty {EASY, MEDIUM, HARD, EXTREME};
@@ -13,37 +13,35 @@ public class ArtificialPlayer extends Player {
     private Difficulty difficulty;
     private final TestVictoire testVictoire;
     private final int victorySize;
-    private String gameName;
+    private final String GAMENAME;
+    private final int DIFFICULTYINT;
 
-    public ArtificialPlayer(Cell.cellstate symbolP, TestVictoire testVictoire, Difficulty dif, int victorySize, String gameName) {
+
+
+    public ArtificialPlayer(Cell.cellstate symbolP, TestVictoire testVictoire, int victorySize, String gameName, int difficultyInt) {
         super(symbolP);
-        this.difficulty = dif;
         this.testVictoire = testVictoire;
         this.victorySize = victorySize;
-        this.gameName = gameName;
+        this.GAMENAME = gameName;
         this.isBot = true;
+        this.DIFFICULTYINT =difficultyInt;
+        setDifficulty();
     }
 
 
 
-//    public void setDifficulty() {
-//        int botDifficulty;
-//        do {
-//            botDifficulty = interactionUtilisateur.getNumber("Merci de choisir votre difficultée pour Artificial player " + getName(gameName) + " : \n0 = EASY \uD83E\uDD21\n1 = MEDIUM \uD83D\uDE10\n2 = HARD \uD83D\uDE21 \n3 = EXTREME \uD83D\uDC80");
-//
-//            switch (botDifficulty){
-//                case 0: break;
-//                case 1: difficulty= ArtificialPlayer.Difficulty.MEDIUM; break;
-//                case 2: difficulty= ArtificialPlayer.Difficulty.HARD; break;
-//                case 3: difficulty= ArtificialPlayer.Difficulty.EXTREME; break;
-//            }
-//        }
-//        while (0 > botDifficulty || botDifficulty > 3 );
-//
-//    }
+    public void setDifficulty() {
+            switch (DIFFICULTYINT){
+                case 1: difficulty = Difficulty.EASY; break;
+                case 2: difficulty= ArtificialPlayer.Difficulty.MEDIUM; break;
+                case 3: difficulty= ArtificialPlayer.Difficulty.HARD; break;
+                case 4: difficulty= ArtificialPlayer.Difficulty.EXTREME; break;
+            }
+
+    }
 
     @Override
-    public List<Integer> play(Cell[][] board, boolean isConnect4, List<Integer> coordinates) {
+    public List<Integer> choosePlayCoordinates(Cell[][] board, boolean isConnect4, List<Integer> coordinates) {
         switch (difficulty){
             case EASY: return autoPlay(board);
             case MEDIUM, HARD:
@@ -92,7 +90,7 @@ public class ArtificialPlayer extends Player {
         List<Integer> coordinates = new ArrayList<Integer>();
         //le robot joue au milieu si le tableau est pair
         //seulement avec le bot difficile et le tictactoe
-        if ((difficulty == Difficulty.HARD && gameName== "TICTACTOE")) {
+        if ((difficulty == Difficulty.HARD && Objects.equals(GAMENAME, "TICTACTOE"))) {
             if ((board.length % 2) != 0 && board[(board.length) / 2][(board.length) / 2].getState() == Cell.cellstate.EMPTY) {
                 coordinates.add((board.length) / 2);
                 coordinates.add((board.length) / 2);
@@ -100,7 +98,7 @@ public class ArtificialPlayer extends Player {
             }
         }
             for (int i = 0; i < board[0].length; i++) {
-                if (gameName != "CONNECT4") {
+                if (!Objects.equals(GAMENAME, "CONNECT4")) {
                     for (int j = 0; j < board[i].length; j++) {
 
                         //verification si la victoire est possible

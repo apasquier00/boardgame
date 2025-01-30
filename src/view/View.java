@@ -4,6 +4,9 @@ package view;
 public class View {
     private static final String console_background = "\u001B[40m";
 
+
+
+
     public View(){
     }
 //affichage du tableau
@@ -25,7 +28,7 @@ public class View {
         }
         System.out.print("\n " + line + " \n  ");
         line.append(Board_background).append("   ");
-        line.append("-----".repeat(Math.max(0, board[0].length )));
+        line.append("-----".repeat(board[0].length));
         if (board[0].length > 10 ) {
             line.append("-".repeat((board[0].length-10)/2));
         }
@@ -71,15 +74,49 @@ public class View {
         System.out.println("           " + victoryMessage + "\n");
     }
 
-    public void msgError(Exception e){
-        System.err.println(e.getMessage());
-    }
+
 
     public void printMsg(String msg){
         System.out.println(msg);
     }
+
+
     public void printExeption(Exception error){
-        System.out.println("ERROR : " + error);
+        System.err.println("erreur : " + error);
+    }
+
+    public String createDifficultyMessage(String symbol){
+                return """
+            Veuillez indiquer la difficultée du joueur\s""" + symbol + """
+            
+            1 = EASY 😃
+            2 = MEDIUM 🙁
+            3 = HARD 😡
+            4 = EXTREME ☠️""";
+    }
+
+    public String getGameChoiceMsg() {
+        return """
+                        A quel jeu voulez vous jouer ?
+                        0 : Tic Tac Toe
+                        1 : Gomoku
+                        2 : Connect Four
+                        3 : Quitter""";
+    }
+
+
+
+    public String getArtificialPlayerChoice() {
+        return """
+                Combien de joueurs artificiel voulez vous ?\
+                
+                Joueurs artificiel Max : 2\s""";
+    }
+
+    public String createReplayMsg(String gameName){
+        return "Voulez vous refaire une partie de " + gameName + " ?\n" +
+                "1 : OUI\n" +
+                "2 : NON";
     }
 
 }
