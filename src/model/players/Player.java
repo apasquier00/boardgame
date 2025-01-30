@@ -1,7 +1,6 @@
-package model.Players;
+package model.players;
 
-import model.Games.BoardGame;
-import model.Board.Cell;
+import model.board.Cell;
 
 import java.util.List;
 
@@ -10,9 +9,9 @@ public abstract class Player {
 
 
 
-    private boolean isBot;
-    private final Cell.cellstate symbol;
 
+    protected boolean isBot;
+    private final Cell.cellstate symbol;
     Player(Cell.cellstate symbol) {
         this.symbol = symbol;
     }
@@ -38,13 +37,15 @@ public abstract class Player {
         };
     }
 
-    public abstract List<Integer> play(Cell[][] board, boolean isConnect4);
+    public abstract List<Integer> play(Cell[][] board, boolean isConnect4, List<Integer> coordinates);
 
     public Cell.cellstate getSymbol() {
         //retourne le symbol du joueur
     return symbol;
     }
 
-
+    public boolean isBot() {
+        return isBot;
+    }
 
     }

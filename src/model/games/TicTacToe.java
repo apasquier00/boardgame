@@ -1,4 +1,4 @@
-package model.Games;
+package model.games;
 
 
 public class TicTacToe extends BoardGame {

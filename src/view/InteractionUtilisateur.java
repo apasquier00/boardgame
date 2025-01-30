@@ -1,6 +1,4 @@
-package controller;
-
-import view.View;
+package view;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +32,27 @@ public class InteractionUtilisateur
 
     }
 
+    public boolean getBool(String s) {
+        do{
+            try{
+                view.printMsg(s);
+                Scanner scanner = new Scanner(System.in);
+                int i = scanner.nextInt();
+                switch (i){
+                    case 1:return false;
+                    case 2:return true;
+                }
+            }catch (Exception e){
 
-    public void unvalidCoordinate(String s){
+                view.printExeption(e);
+            }
+
+        }while (true);
+
+    }
+
+
+    public void callUnvalidCoordinate(String s){
         view.unvalidCoordinate(s);
     }
 

@@ -67,8 +67,8 @@ public class View {
     }
 
     public void endMsg(String victoryMessage){
-        System.out.println("\n                    la partie est finie");
-        System.out.println("\n           " + victoryMessage + "\n");
+        System.out.println("\n           la partie est finie");
+        System.out.println("           " + victoryMessage + "\n");
     }
 
     public void msgError(Exception e){

@@ -1,8 +1,8 @@
-package model.Games;
+package model.games;
 
 
-import model.Board.Cell;
-import model.Players.Player;
+import model.board.Cell;
+import model.players.Player;
 
 public class ConnectFour extends BoardGame{
 
@@ -21,15 +21,6 @@ public class ConnectFour extends BoardGame{
         }
         getBoard()[i-1][colonne].setState(player.getSymbol());
     }
-    @Override
-    public Cell.cellstate getOwner(int ligne, int colonne) {
-        int i =0;
-        for(i = 0; i < size; i++){
-            if(getBoard()[i][colonne].getState() != Cell.cellstate.EMPTY){
-                return getBoard()[i-1][colonne].getState();
-            }
-        }
-        return getBoard()[i-1][colonne].getState();
-    }
+
 
 }

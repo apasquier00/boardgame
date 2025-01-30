@@ -1,7 +1,7 @@
-package model.Tests;
+package model.tests;
 
 
-import model.Board.Cell;
+import model.board.Cell;
 
 public class TestVictoire {
 
