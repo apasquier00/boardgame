@@ -72,7 +72,7 @@ abstract public class BoardGame {
         setGameOver(TESTVICTOIRE.isOver(board, victorySize, currentPlayer.getSymbol()));
 
         if (gameOver) {
-            setEndMsg("\nVictoire du joueur " + currentPlayer.getName(gameName.toString()) + "\n");
+            setEndMsg("Victoire du joueur " + currentPlayer.getName(gameName.toString()));
         } else if (turn == board.length * board[0].length) {
             setEndMsg("\nMatch nul \n");
             gameOver = true;

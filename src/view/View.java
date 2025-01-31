@@ -71,7 +71,7 @@ public class View {
 
     public void endMsg(String victoryMessage){
         System.out.println("\n           la partie est finie");
-        System.out.println("           " + victoryMessage + "\n");
+        System.out.println("\n           " + victoryMessage + "\n");
     }
 
 
@@ -83,6 +83,10 @@ public class View {
 
     public void printExeption(Exception error){
         System.err.println("erreur : " + error);
+    }
+
+    public void printState(String state){
+        System.out.println("//////////////////////////////////" + state + "//////////////////////////////////");
     }
 
     public String createDifficultyMessage(String symbol){

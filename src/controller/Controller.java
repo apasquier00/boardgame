@@ -7,6 +7,8 @@ import model.games.TicTacToe;
 import view.InteractionUtilisateur;
 import view.View;
 
+import java.util.Objects;
+
 
 public class Controller {
 
@@ -20,7 +22,6 @@ public class Controller {
     private int botNumber;
 
 
-
     public Controller() {
         this.gameChoice = 0;
         this.currentState = CurrentState.GAMESELECTION;
@@ -30,9 +31,12 @@ public class Controller {
     }
 
 
+
+
     public void start() {
         {
             do {
+                view.printState(getCurrentState());
                 switch (currentState) {
                     case GAMESELECTION:
                         askGame();
@@ -72,16 +76,16 @@ public class Controller {
                 view.printExeption(e);
             }
         } while (true);
-        if (gameChoice == 0){
+        if (gameChoice == 0) {
             setCurrentState(CurrentState.BREAK);
-        }else {
+        } else {
             setCurrentState(CurrentState.CREATEGAME);
         }
     }
 
     //Demande à l'utilisateur le nombre de joueurs artificiels
 
-    private void playerSelection(){
+    private void playerSelection() {
         do {
             try {
                 botNumber = askBotNumber();
@@ -106,12 +110,11 @@ public class Controller {
                 createPlayers(botNumber); //créer les joueurs
                 setCurrentState(CurrentState.PLAYING);
                 break;
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 view.printExeption(e);
                 setCurrentState(CurrentState.PLAYERSELECTION);
             }
-        }while (true);
+        } while (true);
     }
 
     // joue des tours jusque à la fin de la partie
@@ -138,10 +141,10 @@ public class Controller {
             replay = interactionUtilisateur.getBool(view.createReplayMsg(game.getGameName()));
             if (replay) {
                 setCurrentState(CurrentState.GAMESELECTION);
-            }else {
+            } else {
                 setCurrentState(CurrentState.CREATEGAME);
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             view.printExeption(e);
         }
 
@@ -199,6 +202,7 @@ public class Controller {
             } catch (Exception e) {
                 view.printExeption(e);
             }
+
         } while (true);
 
     }
@@ -216,14 +220,14 @@ public class Controller {
     }
 
     // instancie le jeu
-    private void createGame(){
+    private void createGame() {
         switch (currentGame) {
             case TICTACTOE:
                 game = new TicTacToe();
                 break;
-           case GOMOKU:
+            case GOMOKU:
                 game = new Gomoku();
-               break;
+                break;
             case CONNECT4:
                 game = new ConnectFour();
                 break;
@@ -242,17 +246,51 @@ public class Controller {
     }
 
     private void setCurrentGame(int i) throws Exception {
-        switch (i){
-            case 0:currentGame = null;break;
-            case 1:currentGame = BoardGame.GameName.TICTACTOE;break;
-            case 2:currentGame = BoardGame.GameName.GOMOKU;break;
-            case 3:currentGame = BoardGame.GameName.CONNECT4;break;
-            default: throw new Exception("choix de jeux invalide");
+        switch (i) {
+            case 0:
+                currentGame = null;
+                break;
+            case 1:
+                currentGame = BoardGame.GameName.TICTACTOE;
+                break;
+            case 2:
+                currentGame = BoardGame.GameName.GOMOKU;
+                break;
+            case 3:
+                currentGame = BoardGame.GameName.CONNECT4;
+                break;
+            default:
+                throw new Exception("choix de jeux invalide");
         }
     }
 
     private void setCurrentState(CurrentState currentState) {
         this.currentState = currentState;
+    }
+
+    private void secretPlayer() {
+        int i = 0;
+
+        do {
+            System.out.println("partie n°" + i);
+            currentGame = BoardGame.GameName.TICTACTOE;
+            createGame();
+            this.botNumber = 2;
+            try {
+                game.createPlayer(true, 4, "X");
+                game.createPlayer(true, 1, "O");
+            } catch (Exception e) {
+                view.printExeption(e);
+            }
+            play();
+            i++;
+
+        } while (Objects.equals(game.getCurrentPlayerName(), "X"));
+        System.exit(0);
+    }
+
+    public String  getCurrentState() {
+        return currentState.toString();
     }
 }
 
