@@ -98,10 +98,11 @@ public class View {
     public String getGameChoiceMsg() {
         return """
                         A quel jeu voulez vous jouer ?
-                        0 : Tic Tac Toe
-                        1 : Gomoku
-                        2 : Connect Four
-                        3 : Quitter""";
+                        0 : Quitter
+                        1 : Tic Tac Toe
+                        2 : Gomoku
+                        3 : Connect Four
+                        """;
     }
 
 

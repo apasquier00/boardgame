@@ -1,0 +1,6 @@
+package controller;
+
+public enum CurrentState
+{
+    GAMESELECTION, CREATEGAME, PLAYERSELECTION, CREATEPLAYERS, PLAYING, ENDING, BREAK
+}

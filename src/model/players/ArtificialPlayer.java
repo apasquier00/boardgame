@@ -44,17 +44,11 @@ public class ArtificialPlayer extends Player {
     public List<Integer> choosePlayCoordinates(Cell[][] board, boolean isConnect4, List<Integer> coordinates) {
         switch (difficulty){
             case EASY: return autoPlay(board);
-            case MEDIUM, HARD:
+            case MEDIUM, HARD, EXTREME:
                 return ia(board, this);
 
         }
-        List<Integer> c = new ArrayList<>();
-
-        //c = autoPlay(board);
-
-        c = ia(board, this);
-
-        return c;
+    return null;
     }
 
 
@@ -88,9 +82,9 @@ public class ArtificialPlayer extends Player {
 
     List<Integer> ia(Cell[][] board, Player player) {
         List<Integer> coordinates = new ArrayList<Integer>();
-        //le robot joue au milieu si le tableau est pair
+        //le robot joue au milieu si le tableau est imppair
         //seulement avec le bot difficile et le tictactoe
-        if ((difficulty == Difficulty.HARD && Objects.equals(GAMENAME, "TICTACTOE"))) {
+        if (((difficulty == Difficulty.HARD || difficulty == Difficulty.EXTREME) && Objects.equals(GAMENAME, "TICTACTOE"))) {
             if ((board.length % 2) != 0 && board[(board.length) / 2][(board.length) / 2].getState() == Cell.cellstate.EMPTY) {
                 coordinates.add((board.length) / 2);
                 coordinates.add((board.length) / 2);
@@ -240,6 +234,7 @@ boolean isWinningCell(Cell[][] board1, int i, int j, boolean forEnemy, int victo
     List<Integer> ExtremeAI(Cell[][] board){
         //ia avancée PAS ENCORE OPERATIONELLE
         List<Integer> randomAdjacent = new ArrayList<>();
+
 
 
             if (!isBoardEmpty(board)){

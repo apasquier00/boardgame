@@ -18,7 +18,7 @@ abstract public class BoardGame {
     private String endMsg;
     private Cell[][] board;
 
-    protected enum GameName {
+    public enum GameName {
         CONNECT4, TICTACTOE, GOMOKU
     }
 
