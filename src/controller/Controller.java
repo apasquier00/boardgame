@@ -65,7 +65,6 @@ public class Controller {
     }
 
 
-    //Demande à l'utilisateur à quel jeu jouer
     private void askGame() {
         do {
             try {
@@ -83,7 +82,6 @@ public class Controller {
         }
     }
 
-    //Demande à l'utilisateur le nombre de joueurs artificiels
 
     private void playerSelection() {
         do {
@@ -102,7 +100,6 @@ public class Controller {
         setCurrentState(CurrentState.CREATEPLAYERS);
     }
 
-    //Instancie les joueurs
 
     private void createPlayers() {
         do {
@@ -117,7 +114,6 @@ public class Controller {
         } while (true);
     }
 
-    // joue des tours jusque à la fin de la partie
 
 
     private void play() {
@@ -134,7 +130,6 @@ public class Controller {
     }
 
 
-    //Demander au joueur si il veut rejouer
     private void replay() {
         boolean replay;
         try {
@@ -150,7 +145,6 @@ public class Controller {
 
     }
 
-    // jouer le tour de 1 joueur
     private void playTurns() {
         game.changeCurrentPlayer();
         view.gridDisplay(game.getDisplayBoard(), game.getBoardBackground());
@@ -163,7 +157,6 @@ public class Controller {
         interactionUtilisateur.printMsg("Joueur " + game.getCurrentPlayerName() + " : à décider de jouer en " + game.getOwner());
     }
 
-    //instancie les joueurs
     private void createPlayers(int botNumber) throws Exception {
         switch (botNumber) {
             case 0:
@@ -184,14 +177,12 @@ public class Controller {
     }
 
 
-    // Demande le nombre de bot
     private int askBotNumber() throws Exception {
 
         return interactionUtilisateur.getNumber(view.getArtificialPlayerChoice());
     }
 
 
-    // Demande la difficultée pour le joueur artificiel
     private int askBotDifficulty(String Symbol) {
         do {
             try {
@@ -207,7 +198,7 @@ public class Controller {
 
     }
 
-    // Demande les coordonnées à jouer
+
     private void askCoordinates() {
         do {
             try {
@@ -219,7 +210,7 @@ public class Controller {
         } while (true);
     }
 
-    // instancie le jeu
+
     private void createGame() {
         switch (currentGame) {
             case TICTACTOE:

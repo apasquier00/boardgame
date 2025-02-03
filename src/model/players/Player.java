@@ -12,8 +12,8 @@ public abstract class Player {
 
 
     protected boolean isBot;
-    private final Cell.cellstate symbol;
-    Player(Cell.cellstate symbol) {
+    private final Cell.CellState symbol;
+    Player(Cell.CellState symbol) {
         this.symbol = symbol;
     }
 
@@ -40,7 +40,7 @@ public abstract class Player {
 
     public abstract List<Integer> choosePlayCoordinates(Cell[][] board, boolean isConnect4, List<Integer> coordinates);
 
-    public Cell.cellstate getSymbol() {
+    public Cell.CellState getSymbol() {
         //retourne le symbol du joueur
     return symbol;
     }

@@ -11,7 +11,7 @@ public class TestVictoire {
     public TestVictoire() {
     }
 
-    public boolean isOver(Cell[][] board, int victoryNumber, Cell.cellstate symbol) {
+    public boolean isOver(Cell[][] board, int victoryNumber, Cell.CellState symbol) {
 
 
         //test de victoire par collonne ou ligne simplifié en 1 seule ligne
@@ -33,7 +33,7 @@ public class TestVictoire {
 
     }
 
-    private boolean solve(Cell[][] board, int victoryNumber, Cell.cellstate testCellState) {
+    private boolean solve(Cell[][] board, int victoryNumber, Cell.CellState testCellState) {
         int count = 0;
         for (Cell[] cells : board) {
             for (int j = 0; j < board[0].length; j++) {
@@ -52,7 +52,7 @@ public class TestVictoire {
         return false;
     }
 
-    private boolean countLines(Cell[][] board, int victoryNumber, Cell.cellstate testCellState) {
+    private boolean countLines(Cell[][] board, int victoryNumber, Cell.CellState testCellState) {
 //        int count = 0;
 //        for (int i = 0; i < board.length; i++) {
 //            for (int j = 0; j < board[0].length; j++) {
@@ -74,7 +74,7 @@ public class TestVictoire {
     }
 
 
-    private boolean countCols(Cell[][] board, int victoryNumber, Cell.cellstate testCellState) {
+    private boolean countCols(Cell[][] board, int victoryNumber, Cell.CellState testCellState) {
         Cell[][] newBoard = new Cell[board[0].length][board.length];
         for (int i = 0; i < newBoard.length; i++) {
             for (int j = 0; j < newBoard[0].length; j++) {
@@ -103,7 +103,7 @@ public class TestVictoire {
     }
 
 
-    private boolean countRisingDiags(Cell[][] board, int victoryNumber, Cell.cellstate testCellState) {
+    private boolean countRisingDiags(Cell[][] board, int victoryNumber, Cell.CellState testCellState) {
         //RISING DIAG
 //        int maxDiagLength = Math.max(board.length, board[0].length);
 //        int nbrOfDiagsToTest = board.length + board[0].length -1 - (victoryNumber - 1) * 2;
@@ -166,7 +166,7 @@ public class TestVictoire {
         }
         return false;
     }
-    private boolean countDescendingDiags(Cell[][] board, int victoryNumber, Cell.cellstate testCellState) {
+    private boolean countDescendingDiags(Cell[][] board, int victoryNumber, Cell.CellState testCellState) {
         int count = 0;
         //DESCENDING DIAG
         for (int k = -(board[0].length) + victoryNumber; k <= board.length-victoryNumber ; k++) {

@@ -1,5 +1,6 @@
 package model.games;
 
+import model.board.Board;
 import model.board.Cell;
 import model.players.ArtificialPlayer;
 import model.players.HumanPlayer;
@@ -16,7 +17,7 @@ abstract public class BoardGame {
 
     private Player currentPlayer;
     private String endMsg;
-    private Cell[][] board;
+    private Board board;
 
     public enum GameName {
         CONNECT4, TICTACTOE, GOMOKU
@@ -44,7 +45,7 @@ abstract public class BoardGame {
 
 
     public Cell[][] getBoard() {
-        return board;
+        return board.getBoard();
     }
 
     public String getEndMsg() {
@@ -61,7 +62,7 @@ abstract public class BoardGame {
         List<Integer> Coordinates = new ArrayList<>();
 
         do {
-            Coordinates = currentPlayer.choosePlayCoordinates(board, testGameNameConnect4(), Coordinates);
+            Coordinates = currentPlayer.choosePlayCoordinates(getBoard(), testGameNameConnect4(), Coordinates);
         } while (testCoordinates(Coordinates));
         setOwner(Coordinates.get(0), Coordinates.get(1), currentPlayer);
         testEnd();
@@ -69,35 +70,38 @@ abstract public class BoardGame {
 
 
     public void testEnd() {
-        setGameOver(TESTVICTOIRE.isOver(board, victorySize, currentPlayer.getSymbol()));
+        setGameOver(TESTVICTOIRE.isOver(getBoard(), victorySize, currentPlayer.getSymbol()));
 
         if (gameOver) {
             setEndMsg("Victoire du joueur " + currentPlayer.getName(gameName.toString()));
-        } else if (turn == board.length * board[0].length) {
+        } else if (turn == getBoard().length * getBoard()[0].length) {
             setEndMsg("\nMatch nul \n");
             gameOver = true;
         }
     }
 
+    public void createClearBoard(){
+        board = new Board(size, gameName);
+    }
 
     public void createPlayer(boolean isBot, int difficulty, String symbol) throws Exception {
 
         if (isBot){
             switch (symbol){
                 case "X":
-                    this.PLAYER[0] = new ArtificialPlayer(Cell.cellstate.X, TESTVICTOIRE, victorySize, getGameName(), difficulty);
+                    this.PLAYER[0] = new ArtificialPlayer(Cell.CellState.X, TESTVICTOIRE, victorySize, getGameName(), difficulty);
                     break;
                 case "O":
-                    this.PLAYER[1] = new ArtificialPlayer(Cell.cellstate.O, TESTVICTOIRE, victorySize, getGameName(), difficulty);
+                    this.PLAYER[1] = new ArtificialPlayer(Cell.CellState.O, TESTVICTOIRE, victorySize, getGameName(), difficulty);
                     break;
             }
         }else {
             switch (symbol){
                 case "X":
-                    this.PLAYER[0] = new HumanPlayer(Cell.cellstate.X);
+                    this.PLAYER[0] = new HumanPlayer(Cell.CellState.X);
                 break;
                 case "O":
-                    this.PLAYER[1] = new HumanPlayer(Cell.cellstate.O);
+                    this.PLAYER[1] = new HumanPlayer(Cell.CellState.O);
                     break;
 
             }
@@ -108,43 +112,33 @@ abstract public class BoardGame {
 
     private boolean testCoordinates(List<Integer> coordinate) {
         //test de la ligne
-         if (coordinate.get(0) < 0 || coordinate.get(0) >= board.length) {
+         if (coordinate.get(0) < 0 || coordinate.get(0) >= getBoard().length) {
             return true;        //test de la colonne
-        }else if (coordinate.get(1) < 0 || coordinate.get(1) >= board[0].length) {
+        }else if (coordinate.get(1) < 0 || coordinate.get(1) >= getBoard()[0].length) {
             return true;
-        }else return board[coordinate.get(0)][coordinate.get(1)].getState() != Cell.cellstate.EMPTY;
+        }else return getBoard()[coordinate.get(0)][coordinate.get(1)].getState() != Cell.CellState.EMPTY;
     }
 
     protected void setOwner(int ligne, int colonne, Player player) {
         coordinates = ("[" + ligne + ", " + colonne + "]");
-        board[ligne][colonne].setState(player.getSymbol());
+        getBoard()[ligne][colonne].setState(player.getSymbol());
     }
 
-    Cell.cellstate getOwner(int ligne, int colonne) {
-        return board[ligne][colonne].getState();
+    Cell.CellState getOwner(int ligne, int colonne) {
+        return getBoard()[ligne][colonne].getState();
     }
 
-    public void createClearBoard() {
-        if (gameName != GameName.CONNECT4) {
-            board = new Cell[size][size];
-        } else {
-            board = new Cell[size][size + 1];
-        }
-        for (int i = 0; i < board.length; i++)
-            for (int j = 0; j < board[0].length; j++) {
-                board[i][j] = new Cell();
-            }
-    }
+
 
     public String getGameName() {
         return gameName.toString();
     }
 
     public String[][] getDisplayBoard() {
-        String[][] displayBoard = new String[board.length][board[0].length];
-        for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                displayBoard[i][j] = board[i][j].getRepresentation(getGameName());
+        String[][] displayBoard = new String[getBoard().length][getBoard()[0].length];
+        for (int i = 0; i < getBoard().length; i++) {
+            for (int j = 0; j < getBoard()[0].length; j++) {
+                displayBoard[i][j] = getBoard()[i][j].getRepresentation(getGameName());
             }
         }
         return displayBoard;

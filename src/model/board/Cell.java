@@ -1,9 +1,8 @@
 package model.board;
 
 
-
 public class Cell {
-    public enum cellstate {
+    public enum CellState {
         EMPTY,
         X,
         O
@@ -11,58 +10,61 @@ public class Cell {
 
     private String representation;
 
-    private cellstate state;
+    private CellState state;
 
 
-    public Cell(){
-        this.representation =  "|     ";
-        this.state = cellstate.EMPTY;
+    public Cell() {
+        this.representation = "|     ";
+        this.state = CellState.EMPTY;
     }
 
     public String setRepresentation(String gameName) {
-        switch (gameName){
+        switch (gameName) {
             case "TICTACTOE":
-                switch(state) {
+                switch (state) {
                     case EMPTY:
                         return "|        ";
                     case X:
                         return "| ❌ ";
                     case O:
                         return "| ⭕ ";
-                } break;
+                }
+                break;
             case "GOMOKU":
-                switch(state) {
+                switch (state) {
                     case EMPTY:
                         return "|        ";
                     case X:
                         return "| ⚪\uFE0F ";
                     case O:
                         return "| ⚫ ";
-                } break;
+                }
+                break;
             case "CONNECT4":
-                switch(state) {
+                switch (state) {
                     case EMPTY:
                         return "|        ";
                     case X:
                         return "| \uD83C\uDF15 ";
                     case O:
                         return "| \uD83D\uDD34 ";
-                } break;
-    }
+                }
+                break;
+        }
         return "|     ";
     }
 
-    public cellstate getState() {
+    public CellState getState() {
         return state;
     }
 
-    public void setState(cellstate state) {
+    public void setState(CellState state) {
         this.state = state;
     }
 
-    public String getRepresentation(String gameName){
+    public String getRepresentation(String gameName) {
         representation = setRepresentation(gameName);
         return representation;
-        }
+    }
 
 }

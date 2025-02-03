@@ -14,7 +14,7 @@ public class ConnectFour extends BoardGame{
     protected void setOwner(int ligne, int colonne, Player player) {
         int i =0;
         for(i = 0; i < size; i++){
-            if(getBoard()[i][colonne].getState() != Cell.cellstate.EMPTY){
+            if(getBoard()[i][colonne].getState() != Cell.CellState.EMPTY){
                 getBoard()[i-1][colonne].setState(player.getSymbol());
                 return;
             }

@@ -18,7 +18,7 @@ public class ArtificialPlayer extends Player {
 
 
 
-    public ArtificialPlayer(Cell.cellstate symbolP, TestVictoire testVictoire, int victorySize, String gameName, int difficultyInt) {
+    public ArtificialPlayer(Cell.CellState symbolP, TestVictoire testVictoire, int victorySize, String gameName, int difficultyInt) {
         super(symbolP);
         this.testVictoire = testVictoire;
         this.victorySize = victorySize;
@@ -59,7 +59,7 @@ public class ArtificialPlayer extends Player {
         List<Integer> coordinates = new ArrayList<>();
         for (int i = 0; i < board.length; i++) {
             for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j].getState() == Cell.cellstate.EMPTY) {
+                if (board[i][j].getState() == Cell.CellState.EMPTY) {
                     listCoordos.add(new int[]{i, j});
                 }
             }
@@ -85,7 +85,7 @@ public class ArtificialPlayer extends Player {
         //le robot joue au milieu si le tableau est imppair
         //seulement avec le bot difficile et le tictactoe
         if (((difficulty == Difficulty.HARD || difficulty == Difficulty.EXTREME) && Objects.equals(GAMENAME, "TICTACTOE"))) {
-            if ((board.length % 2) != 0 && board[(board.length) / 2][(board.length) / 2].getState() == Cell.cellstate.EMPTY) {
+            if ((board.length % 2) != 0 && board[(board.length) / 2][(board.length) / 2].getState() == Cell.CellState.EMPTY) {
                 coordinates.add((board.length) / 2);
                 coordinates.add((board.length) / 2);
                 return coordinates;
@@ -147,7 +147,7 @@ public class ArtificialPlayer extends Player {
 
     int returnLowestFreeCoordinate(Cell[][] board, int j){
         for (int i = 0; i < board.length; i++) {
-            if (board[i][j].getState() != Cell.cellstate.EMPTY){
+            if (board[i][j].getState() != Cell.CellState.EMPTY){
                 return i-1;
             }
         }
@@ -158,34 +158,34 @@ public class ArtificialPlayer extends Player {
 
 boolean isWinningCell(Cell[][] board1, int i, int j, boolean forEnemy, int victorySize) {
         boolean winning;
-        Cell.cellstate symboltotest = getSymbol();
-        if (board1[i][j].getState() != Cell.cellstate.EMPTY) {
+        Cell.CellState symboltotest = getSymbol();
+        if (board1[i][j].getState() != Cell.CellState.EMPTY) {
             return false;
             //verification de la victoire pour le joueur
         } else if (!forEnemy){
             switch (getSymbol()){
-                case Cell.cellstate.O: board1[i][j].setState(Cell.cellstate.O);break;
-                case Cell.cellstate.X: board1[i][j].setState(Cell.cellstate.X);break;
+                case Cell.CellState.O: board1[i][j].setState(Cell.CellState.O);break;
+                case Cell.CellState.X: board1[i][j].setState(Cell.CellState.X);break;
 
             }
         }else{
             //verification de la victoire pour le joueur adverse
 
             symboltotest = switch (getSymbol()) {
-                case Cell.cellstate.X -> {
-                    board1[i][j].setState(Cell.cellstate.O);
-                    yield Cell.cellstate.O;
+                case Cell.CellState.X -> {
+                    board1[i][j].setState(Cell.CellState.O);
+                    yield Cell.CellState.O;
                 }
-                case Cell.cellstate.O -> {
-                    board1[i][j].setState(Cell.cellstate.X);
-                    yield Cell.cellstate.X;
+                case Cell.CellState.O -> {
+                    board1[i][j].setState(Cell.CellState.X);
+                    yield Cell.CellState.X;
                 }
                 default -> symboltotest;
             };
         }
         winning = testVictoire.isOver(board1, victorySize, symboltotest);
 
-    board1[i][j].setState(Cell.cellstate.EMPTY);
+    board1[i][j].setState(Cell.CellState.EMPTY);
 
     return winning;
 }
