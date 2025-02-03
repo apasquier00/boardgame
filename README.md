@@ -1,0 +1,1 @@
+Ce projet contient une bibliothèque de jeux organisée en MVC. Plusieurs notions avancées sont utilisées comme les classes abstraites, les machines a état et la gestion des erreurs.
